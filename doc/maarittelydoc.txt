@@ -1,27 +1,40 @@
 -Mitä ohjelmointikieltä käytät? Kerro myös mitä muita kieliä hallitset siinä määrin, että pystyt tarvittaessa vertaisarvioimaan niillä tehtyjä projekteja.
+
 Projektin toteutukseen tulen käyttämään Javaa. Hallitsen Javaa parhaiten, Pythonista osaan alkeet.
 
 -Mitä algoritmeja ja tietorakenteita toteutat työssäsi?
 
+Käytän Markovin ketjuja työn toteuttamiseen. 
+En vielä tiedä miten tulen varastoimaan dataa, sen toteutus on tällä hetkellä pelkässä Javan ArrayListissä.
 
 -Mitä ongelmaa ratkaiset ja miksi valitsit kyseiset algoritmit/tietorakenteet?
+
 Tulen toteuttamaan tekoälyn kivi-sakset-paperi-peliin, joka pyrkii päihittämään ihmisvastuksen. 
 Mikäli aika sallii, teen mahdolliseksi pistää teköälyn pelaamaan itseään vastaan ja laajentamaan Spock-peliin.
 
 -Mitä syötteitä ohjelma saa ja miten näitä käytetään?
 
+Peli saa syötteenä pelaajan päätöksen, kivi, sakset tai paperi. 
+Olen myös luonut yleisen valikon, jossa voi katsoa mm. pelaajan ja koneen voittoprosentit.
+Saatan luoda graafisen käyttöliittymän sovellukselle, mikäli siihen jää aikaa.
 
 -Tavoitteena olevat aika- ja tilavaativuudet (m.m. O-analyysit)
 
+En osaa vielä sanoa mikä tekoälyn aikavaativuus on.
+Tilavaativuus on n, missä n on aikaisempien pelien tallennettu tulos.
 
 -Lähteet
+
 https://arxiv.org/ftp/arxiv/papers/2003/2003.06769.pdf
 
 -Kurssin hallintaan liittyvistä syistä määrittelydokumentissä tulee mainita opinto-ohjelma johon kuulut. 
 Esimerkiksi tietojenkäsittelytieteen kandidaatti (TKT) tai bachelor’s in science (bSc)
+
 Kuulun tietojenkäsittelytieteen kandidaatin tutkielmaan.
 
 -Määrittelydokumentissa tulee myös mainita projektin dokumentaatiossa käytetty kieli (todennäköisesti sama kuin määrittelydokumentin kieli). 
 Projektin koodin, kommenttien ja dokumenttien teksti on valitulla kielellä. 
 Tyypillisesti suomi tai englanti. Tämä vaatimus liittyy projektin puolen välin paikkeilla järjestettäviin koodikatselmointeihin. 
 Tavoitteena on että projektien sisäiset kielivalinnat ovat johdonmukaisia.
+
+Teen dokumentaation suomeksi.

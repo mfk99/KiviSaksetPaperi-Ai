@@ -1,0 +1,10 @@
+Tällä viikolla tein repositorion valmiiksi.
+
+Ohjelmaan olen vasta ehtinyt tehdä yksinkertaisen käyttöliittymän pelin pelaamiseen satunnaisesta valitsevaa vastusta vastaan.
+
+En oppinut tällä viikolla paljoa uutta tietoa, mutta pääsin kertaamaan vanhempia taitoja jotka olivat ilmeisesti hieman unohtuneet.
+
+Epäselvyyksiä ei ole vielä esittäytynyt. 
+Hieman minua huolestuttaa miten saan tietokannan toimimaan, koska minulla jäi tsoha-kurssi kesken koska en saanut tietokantaa toimimaan koneellani (OS on Windows 10). 
+
+Seuraavaksi pyrin luomaan tietokannan, joka tallettaa aikaisemmien pelien tiedot. Tämän jälkeen alan kehittämään itse tekoälyä.
