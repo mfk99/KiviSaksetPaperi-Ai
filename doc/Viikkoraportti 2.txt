@@ -1,0 +1,19 @@
+Tällä viikolla tutkin Markovin ketjuja tarkemmin sekä aloin toteuttamaan tekoälyn eri osia.
+Löysin myös toisen lähteen, jossa on toteutettu kivi-sakset-paperi tekoäly. Tämä on lisätty lähteisiin määrittelydokumentissa.
+
+Käyttöliittymässä voi nyt valita naiivin tekoälyn vastustajaksi pelatessa.
+Tekoäly ei ole tosin vielä kokonaan toteutettu joten se ei toimi.
+Osia tekoälyistä 1 ja 2 on toteutettu, niiden koodit löytyvät mainista.
+
+Opin tällä viikolla Markovin ketjuista, vilkaisin myös hieman moninmutkaisempia koneoppimismenetelmiä.
+
+Minun piti tehdä uusi gradle Java-Application, kun olin aikaisemmalla viikolla tehnyt gradle Multi-Project buildin vahingossa.
+Javan Scanner-luokka ei toiminut NetBeansissa halutulla tavalla alkuperäisesti. 
+Tämän korjasin lisäämällä build.gradleen seuraavan osion:
+run {
+    standardInput = System.in
+}
+Netbeans ei nyt tosin näytä ääkkösiä oikeassa muodossa, katson mikäli löydän tähän vastauksia ensi viikon aikana.
+
+Seuraavaksi pyrin saamaan kaksi tekoälyä toimimaan sovelluksessa, jonka jälkeen lisään muita tekoälyjä.
+Käytin tällä viikolla prjektin tekoon n. 8 tuntia.

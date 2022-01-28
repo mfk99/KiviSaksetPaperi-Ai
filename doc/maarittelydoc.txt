@@ -26,6 +26,7 @@ Tilavaativuus on n, missä n on aikaisempien pelien tallennettu tulos.
 -Lähteet
 
 https://arxiv.org/ftp/arxiv/papers/2003/2003.06769.pdf
+https://towardsdatascience.com/building-a-rock-paper-scissors-ai-948ec424132f
 
 -Kurssin hallintaan liittyvistä syistä määrittelydokumentissä tulee mainita opinto-ohjelma johon kuulut. 
 Esimerkiksi tietojenkäsittelytieteen kandidaatti (TKT) tai bachelor’s in science (bSc)
