@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    
+    public static AI tekoaly;
     public static int pelatutPelit=0;
     final public static int f=5;
     //f on määrä pelejä, joihin AI keskittyy
@@ -16,7 +16,7 @@ public class Main {
     public static Scanner s=new Scanner(System.in);
 
     public static void main(String[] args) {
-        
+        AI ai=new AI(3);
         while (true) {
             naytaVaihtoehdot();
             String kasky=s.nextLine();
@@ -29,46 +29,34 @@ public class Main {
         }
     }
     
-    public static void naytaVaihtoehdot() {
+    static void naytaVaihtoehdot() {
         System.out.println("Mitä haluat tehdä?");
         System.out.println("Play = Pelaa peliä, Stats = Näytä voittotilastot, Exit = Poistu pelistä");
     }
     
-    public static void pelaajaValitseeAi() {
+    static void pelaajaValitseeAi() {
         System.out.println("Mitä tekoälyä vastaan haluat pelata? (Tällä hetkellä vain yksi, laajennetaan myöhemmin)");
         System.out.println("1. Täysin satunnainen \"tekoäly\", 2. Kolmen naiivn AI:n yhdistelmä");
         String kasky=s.nextLine();
         pelaa(Integer.valueOf(kasky));
     }
     
-    public static void pelaa(int ai) {
+    static void pelaa(int ai) {
         //aloitetaan looppi ja jaetaan satunnainen vastaus koneelle
         while (true) {
             if (ai==2) {
-                paivitaAi();
+                tekoaly.paivitaAi();
             }
             String pelaajaVastaus="";
             String koneVastaus="";
-            Random r=new Random();
             /*mikäli ei ole tarpeeksi dataa tai pelataan täysin 
             satunnaisella tekoälyllä, valitaan satunnainen vastaus*/
             if (ai==1 || pelatutPelit<=4) {
-                int i=r.nextInt(3);
-                switch (i) {
-                    case 0:
-                        koneVastaus="kivi";
-                        break;
-                    case 1 :
-                        koneVastaus="sakset";
-                        break;
-                    case 2 :
-                        koneVastaus="paperi";
-                        break;
-                }
+                koneVastaus=satunnainenVastaus("");
             }
             //jos ollaan pelattu ainakin 5 peliä, lasketaan paras AI
             else {
-                int parasAi=laskeParasAi();
+                int parasAi=tekoaly.laskeParasAi();
                 
             }
             //lasketaan mihin indeksiin valinta sijoitetaan
@@ -164,7 +152,7 @@ public class Main {
         }
     }
 
-    public static void naytaTilastot() {
+    static void naytaTilastot() {
         if (tilasto.isEmpty()) {
             System.out.println("Et ole pelannut yhtään peliä!");
         } //tarkistetaan onko pelejä pelattu
@@ -210,31 +198,22 @@ public class Main {
         }
     }
     
-    //ei vielä toteutettu
-    public static void paivitaAi() {
-        
-    }
-    
-    public static int laskeParasAi() {
-        //lasketaan mikä ai voittaisi eniten pelejä viimeisen viiden pelin perusteella
-        int suurin=0;
-        int parasAi=0;
-        int ai1=aiArvo(1);
-        if (ai1>suurin) {
-            suurin=ai1;
-            parasAi=1;
+    //palauttaa satunnaisen vastauksen, vastausta voi rajoittaa kahteen satunnaiseen
+    public static String satunnainenVastaus(String rajoitus) {
+        Random r=new Random();
+        int satunnainen=0;
+        if (rajoitus.equals("")) {
+            satunnainen=r.nextInt(3);
+        } else {
+            satunnainen=r.nextInt(2);
         }
-        int ai2=aiArvo(2);
-        if (ai2>suurin) {
-            suurin=ai2;
-            parasAi=2;
+        if (satunnainen==0 && !rajoitus.equals("kivi")) {
+            return ("kivi");
+        } else if(satunnainen==1 && !rajoitus.equals("sakset")) {
+            return ("sakset");
+        } else {
+            return ("paperi");
         }
-        int ai3=aiArvo(3);
-        if (ai3>suurin) {
-            suurin=ai3;
-            parasAi=3;
-        }
-        return parasAi;
     }
     
     public static int aiArvo(int ai) {
@@ -243,106 +222,4 @@ public class Main {
         return arvo;
     }
     
-    public static String parasVastaus(int i) {
-        String vastaus="";
-        switch (i){
-            case 1:
-                vastaus=ai1Vastaus();
-                break;
-            case 2:
-                vastaus=ai2Vastaus();
-                break;
-            /*case 3:
-                vastaus=ai3Vastaus();
-                break;*/
-        }
-        return vastaus;
-    }
-    
-    /*Ai numero 1 pyrkii aina pelaamaan pelaajan 
-    eniten pelaamaa valintaa vastaan */
-    public static String ai1Vastaus() {
-        int kivi=0;
-        int sakset=0;
-        int paperi=0;
-        for (int i=0; i<pelaajanHistoria.length; i++) {
-            int vastaus=pelaajanHistoria[i];
-            switch (vastaus) {
-                case 1:
-                    kivi++;
-                    break;
-                case 2:
-                    paperi++;
-                    break;
-                case 3:
-                    sakset++;
-                    break;
-            }
-        }
-        //katsotaan onko yksi kahta isompi
-        if (3<=kivi) return "kivi";
-        if (3<=sakset) return "sakset";
-        if (3<=paperi) return "paperi";
-        /*jos mikään ei ole kolmea tai sitä suurempi, tällöin kaksi on 
-        yhtä suurta jolloin arvotaa kumpi valitaan*/
-        Random r = new Random();
-        int kolikonHeitto=r.nextInt(1);
-        if (kivi==sakset) {
-            if (kolikonHeitto==0) return "kivi";
-            return "sakset";
-        }
-        if (kivi==paperi) {
-            if (kolikonHeitto==0) return "kivi";
-            return "paperi"; 
-        }
-        if (kolikonHeitto==0) return "sakset";
-        return "paperi";
-    }
-    
-    /*Ai numero 2 pyrkii aina pelaamaan pelaajan 
-    vähiten pelaamaa valintaa vastaan */ 
-    public static String ai2Vastaus() {
-        int kivi=0;
-        int sakset=0;
-        int paperi=0;
-        for (int i=0; i<pelaajanHistoria.length; i++) {
-            int vastaus=pelaajanHistoria[i];
-            switch (vastaus) {
-                case 1:
-                    kivi++;
-                    break;
-                case 2:
-                    paperi++;
-                    break;
-                case 3:
-                    sakset++;
-                    break;
-            }
-        }
-        Random r=new Random();
-        int kolikonHeitto=r.nextInt(1);
-        if (kivi<=sakset&&kivi<=paperi) {
-            if (kivi==sakset) {
-                if (kolikonHeitto==0) return "kivi";
-                return "sakset";
-            } else if(kivi==paperi) {
-                if (kolikonHeitto==0) return "kivi";
-                return "paperi";
-            } else {
-                return "kivi";
-            }
-        } else if(sakset<=paperi) {
-            if(sakset==paperi) {
-                if (kolikonHeitto==0) return "sakset";
-                return "paperi";
-            } else {
-                return "sakset";
-            }
-        } else return "paperi";
-    }
-    
-    //Ai3 ei vielä toteutettu
-    public static String ai3Vastaus() {
-        return "";
-    }
 }

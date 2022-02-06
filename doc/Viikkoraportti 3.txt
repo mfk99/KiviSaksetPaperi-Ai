@@ -1,0 +1,12 @@
+Tällä viikolla pohdin paljon miten tietyt osiot projektista kannattaa toteuttaa, esim. jaoin tekoälyn osat omaan javaluokkaansa.
+Aloin myös käyttämään checklistiä Eclipsen kautta.
+
+Ohjelma on nyt kahdessa osassa, koodia on tehty helppolukuisemmaksi lisäämällä pari yleiskätevää metodia.
+
+Opin miten projekti on järkevää jakaa osiin, 
+opin myös miten ei ole tarpeeksi pelkästään käyttää aikaa projektiin vaan aika täytyy käyttää myös tehokkaasti.
+
+Minulla on ollut hieman ongelmia testaamisen toimimaan saannissa, joten lisään sen ensi viikolla.
+
+Seuraavaksi pyrin toetuttamaan tekoälyt 1-4, testaamaan koodin ja jakamaan käyttöliittymän omaan tiedostoonsa.
+Käytin tällä viikolla aikaa projektiin n.6 tuntia.
