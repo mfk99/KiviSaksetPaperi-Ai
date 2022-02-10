@@ -7,36 +7,46 @@ import java.util.Scanner;
 public class Main {
     public static AI tekoaly;
     public static int pelatutPelit=0;
-    final public static int f=5;
-    //f on määrä pelejä, joihin AI keskittyy
+    private static boolean admin=false;
+    //tilastossa 0 on tasapeli, 1 pelaajan voitto ja 2 koneen voitto
     public static ArrayList<Integer> tilasto =new ArrayList<Integer>();
-    public static Integer[] pelaajanHistoria=new Integer[f];
-    //pelaajaHistoriassa kivi=1, sakset=2 ja paperi=3
-    public static Integer[][] aiTaulukko=new Integer[f][3];
     public static Scanner s=new Scanner(System.in);
 
     public static void main(String[] args) {
-        AI ai=new AI(3);
+        tekoaly=new AI(4);
         while (true) {
             naytaVaihtoehdot();
             String kasky=s.nextLine();
             
             if (kasky.equalsIgnoreCase("play")) pelaajaValitseeAi();
             else if (kasky.equalsIgnoreCase("stats")) naytaTilastot();
+            else if (kasky.equalsIgnoreCase("admin")) vaihdaTila();
             else if (kasky.equalsIgnoreCase("exit")) break;
             else System.out.println("Syötä validi käsky");
             System.out.println("");
         }
     }
     
+    static void vaihdaTila() {
+        if (admin) {
+            System.out.println("Admin on pois päältä");
+            admin=false;
+        }
+        else {
+            System.out.println("Admin on päällä");
+            admin=true;
+        }
+        
+    }
+    
     static void naytaVaihtoehdot() {
         System.out.println("Mitä haluat tehdä?");
-        System.out.println("Play = Pelaa peliä, Stats = Näytä voittotilastot, Exit = Poistu pelistä");
+        System.out.println("Play = Pelaa peliä, Stats = Näytä voittotilastot, Admin = Näytä mitä kone aikoo pelata sinua vastaan Exit = Poistu pelistä");
     }
     
     static void pelaajaValitseeAi() {
         System.out.println("Mitä tekoälyä vastaan haluat pelata? (Tällä hetkellä vain yksi, laajennetaan myöhemmin)");
-        System.out.println("1. Täysin satunnainen \"tekoäly\", 2. Kolmen naiivn AI:n yhdistelmä");
+        System.out.println("1. Täysin satunnainen \"tekoäly\", 2. Neljän naiivn AI:n yhdistelmä");
         String kasky=s.nextLine();
         pelaa(Integer.valueOf(kasky));
     }
@@ -44,45 +54,53 @@ public class Main {
     static void pelaa(int ai) {
         //aloitetaan looppi ja jaetaan satunnainen vastaus koneelle
         while (true) {
-            if (ai==2) {
-                tekoaly.paivitaAi();
-            }
+            int parasAi=0;
             String pelaajaVastaus="";
-            String koneVastaus="";
-            /*mikäli ei ole tarpeeksi dataa tai pelataan täysin 
+            String koneVastaus;
+            //lasketaan mihin indeksiin valinta sijoitetaan
+            int indeksi=pelatutPelit%5;
+            /*mikäli ei ole dataa tai pelataan täysin 
             satunnaisella tekoälyllä, valitaan satunnainen vastaus*/
-            if (ai==1 || pelatutPelit<=4) {
+            if (ai==1 || pelatutPelit<1) {
                 koneVastaus=satunnainenVastaus("");
             }
-            //jos ollaan pelattu ainakin 5 peliä, lasketaan paras AI
+            /*jos ollaan pelattu ainakin 1 peli, lasketaan paras AI
+            ja asetetaan koneen vastaukseksi sen tekoälyn vastaus */
             else {
-                int parasAi=tekoaly.laskeParasAi();
-                
+                tekoaly.paivitaAi(indeksi);
+                parasAi=tekoaly.laskeParasAi();
+                koneVastaus=tekoaly.haeVastaus(parasAi);
             }
-            //lasketaan mihin indeksiin valinta sijoitetaan
-            int indeksi=pelatutPelit%f;
-            //pyydetään pelaajalta vastaus
             
+            //näytetään tekoäly ja sen vastaus jos admin on päällä
+            if (admin) {
+                if (ai==1 || pelatutPelit<1) {
+                    System.out.println("Satunnainen ai aikoo valita käden "+koneVastaus);
+                }
+                System.out.println("Ai nro "+parasAi+ " aikoo valita käden "+koneVastaus);
+            }
+            
+            //pyydetään pelaajalta vastaus
             while (true) {
                 System.out.println("Valitse kivi(K) sakset(S) tai paperi(P)");
                 pelaajaVastaus=s.nextLine();
                 if (pelaajaVastaus.equalsIgnoreCase("K")) {
                     pelaajaVastaus="kivi";
-                    pelaajanHistoria[indeksi]=1;
                     break;
                 }
                 else if (pelaajaVastaus.equalsIgnoreCase("S")) {
                     pelaajaVastaus="sakset";
-                    pelaajanHistoria[indeksi]=2;
                     break;
                 }
                 else if (pelaajaVastaus.equalsIgnoreCase("P")) {
                     pelaajaVastaus="paperi";
-                    pelaajanHistoria[indeksi]=3;
                     break;
                 }
                 System.out.println("Syötä validi vaihtoehto");
             }
+            tekoaly.syotaVastaus(pelaajaVastaus, indeksi);
+            if (pelatutPelit>0) tekoaly.laskeTulokset(pelaajaVastaus, indeksi);
+            pelatutPelit++;
             
             //katsotaan pelin tulos
             boolean pelaajaVoitti=false;
@@ -184,6 +202,7 @@ public class Main {
             float koneVoittoProsentti= koneVoitot/maara*100;
             float tasapeliProsentti=tasaPelit/maara*100;
             
+            System.out.println("Pelejä on pelattu "+tilasto.size()+" kerta(a)");
             System.out.println("Pelaaja on voittanut "+pelaajaVoittoProsentti+" prosenttia peleistä");
             System.out.println("Kone on voittanut "+koneVoittoProsentti+" prosenttia peleistä");
             System.out.println("Tasapelejä on ollut "+tasapeliProsentti+" prosenttia peleistä");
@@ -215,11 +234,4 @@ public class Main {
             return ("paperi");
         }
     }
-    
-    public static int aiArvo(int ai) {
-        int arvo=0;
-        for (int i=0; i<f; i++) arvo+=aiTaulukko[i][ai-1];
-        return arvo;
-    }
-    
 }

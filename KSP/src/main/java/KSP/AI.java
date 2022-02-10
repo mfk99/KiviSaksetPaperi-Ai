@@ -1,136 +1,250 @@
 
 package KSP;
 
-import static KSP.Main.pelaajanHistoria;
 import static KSP.Main.satunnainenVastaus;
 
 public class AI {
     
+    //pelaajanHistoria pit‰‰ muistissa pelaajan aikaisempia vastauksia
+    private String pelaajanHistoria[];
+    //arvot pit‰‰ arvoja teko‰lyjen tuloksista
     private int arvot[][];
+    //vastaukset pit‰‰ teko‰lyjen vastauksia
+    private String[] vastaukset;
     
     public AI(int x) {
+        pelaajanHistoria=new String[5];
         arvot=new int[x][5];
+        vastaukset=new String[5];
+        for (int i=0; i<5; i++) {
+            pelaajanHistoria[i]="";
+            vastaukset[i]="";
+        }
     }
     
-    //ei viel‰ toteutettu
-    public static void paivitaAi() {
-        
+    //p‰ivitet‰‰n teko‰lyjen vastaukset
+    void paivitaAi(int i) {
+        if (i==0) i=4;
+        ai1Vastaus();
+        ai2Vastaus();
+        ai3Vastaus(i);
+        ai4Vastaus(i);
     }
     
-    public static int laskeParasAi() {
+    /* syˆtt‰‰ vastauksen historia-taulukkoon, 
+    hyv‰ pit‰‰ erill‰‰n laskeTulokset-metodista */
+    void syotaVastaus(String pelaajaVastaus,int indeksi) {
+        pelaajanHistoria[indeksi]=pelaajaVastaus;
+    }
+    
+    //lasketaan teko‰lyjen vastauksien tulokset
+    void laskeTulokset(String pelaajaVastaus, int indeksi) {
+        for (int i=0; i<4; i++) {
+            String aiVastaus=vastaukset[i];
+            //katsotaan onko peli tasapeli
+            if (aiVastaus.equals(pelaajaVastaus)) {
+                arvot[i][indeksi]=0;
+            }
+            //peli ei ole tasapeli, katsotaan kumpi voitti
+            else if (pelaajaVastaus.equals("kivi")) {
+                if (aiVastaus.equals("sakset")) {
+                    arvot[i][indeksi]=-1;
+                } else {
+                    arvot[i][indeksi]=1;
+                }
+            } else if (pelaajaVastaus.equals("sakset")) {
+                if (aiVastaus.equals("paperi")) {
+                    arvot[i][indeksi]=-1;
+                } else {
+                    arvot[i][indeksi]=1;
+                }
+            } else {
+                if (aiVastaus.equals("kivi")) {
+                    arvot[i][indeksi]=-1;
+                } else {
+                    arvot[i][indeksi]=1;
+                }
+            }
+        }
+    }
+    
+    int laskeParasAi() {
         //lasketaan mik‰ ai voittaisi eniten pelej‰ viimeisen viiden pelin perusteella
-        int suurin=0;
+        int suurin=-5;
         int parasAi=0;
-        for (int i=1; i<=3; i++) {
-            
+        for (int i=0; i<arvot.length; i++) {
+            int nyky=0;
+            for (int j=0; j<5; j++) {
+                nyky+=arvot[i][j];
+            }
+            if (suurin<nyky) {
+                suurin=nyky;
+                parasAi=i+1;
+            }
         }
         return parasAi;
     }
     
-    public static String parasVastaus(int i) {
-        String vastaus="";
-        switch (i){
-            case 1:
-                vastaus=ai1Vastaus();
-                break;
-            case 2:
-                vastaus=ai2Vastaus();
-                break;
-            /*case 3:
-                vastaus=ai3Vastaus();
-                break;*/
-        }
-        return vastaus;
+    //palautetaan koneen laskema vastaus
+    String haeVastaus(int i) {
+        return vastaukset[i-1];
     }
     
     /*Ai numero 1 pyrkii aina pelaamaan pelaajan 
     eniten pelaamaa valintaa vastaan */
-    public static String ai1Vastaus() {
+    void ai1Vastaus() {
+        String vastaus="";
         int kivi=0;
         int sakset=0;
         int paperi=0;
         for (int i=0; i<pelaajanHistoria.length; i++) {
-            int vastaus=pelaajanHistoria[i];
-            switch (vastaus) {
-                case 1:
+            String pelaajaVastaus=pelaajanHistoria[i];
+            switch (pelaajaVastaus) {
+                case "":
+                    break;
+                case "kivi":
                     kivi++;
                     break;
-                case 2:
+                case "paperi":
                     paperi++;
                     break;
-                case 3:
+                case "sakset":
                     sakset++;
                     break;
             }
         }
-        //katsotaan onko yksi kahta isompi
-        if (3<=kivi) return "kivi";
-        if (3<=sakset) return "sakset";
-        if (3<=paperi) return "paperi";
-        /*jos mik‰‰n ei ole kolmea tai sit‰ suurempi, t‰llˆin kaksi on 
-        yht‰ suurta jolloin arvotaa kumpi valitaan*/
-        if (kivi==sakset) {
-            return satunnainenVastaus("paperi");
+        /*katsotaan onko yksi kahta isompi
+        jos on pelattu eniten kive‰, se voitetaan paperilla jne.*/
+        if (sakset<kivi && paperi<kivi) {
+            vastaus="paperi";
         }
-        if (kivi==paperi) {
-            return satunnainenVastaus("sakset");
+        else if (kivi<sakset && paperi<sakset) {
+            vastaus="kivi";
         }
-        return satunnainenVastaus("kivi");
+        else if (kivi<paperi && sakset<paperi) {
+            vastaus="sakset";
+        }
+        /*jos mik‰‰n ei ole kumpaakin suurempi, t‰llˆin kaksi tai kaikki
+        ovat yht‰suuria, k‰yd‰‰n mahdolliset lopputulokset l‰pi*/
+        else {
+            /*katsotaa ovatko kaikki yht‰suuria, 
+            jos on arvotaan satunnainen vastaus*/
+            if (kivi==sakset&&sakset==paperi) {
+                vastaus=satunnainenVastaus("");
+            }
+            /*katsotaan mitk‰ ovat yht‰suuria
+            jos paperia on pelattu v‰hiten, 
+            teko‰ly ei pelaa ainakaan sit‰ vastaan jne.*/
+            else if (kivi==sakset) {
+                vastaus=satunnainenVastaus("sakset");
+            }
+            else if (kivi==paperi) {
+                vastaus=satunnainenVastaus("kivi");
+            }
+            else {
+                vastaus=satunnainenVastaus("paperi");
+            }
+        }
+        //syˆtet‰‰n vastaus listaan
+        vastaukset[0]=vastaus;
     }
     
     /*Ai numero 2 pyrkii aina pelaamaan pelaajan 
     v‰hiten pelaamaa valintaa vastaan */ 
-    public static String ai2Vastaus() {
+    void ai2Vastaus() {
+        String vastaus="";
         int kivi=0;
         int sakset=0;
         int paperi=0;
         for (int i=0; i<pelaajanHistoria.length; i++) {
-            int vastaus=pelaajanHistoria[i];
-            switch (vastaus) {
-                case 1:
+            String pelaajaVastaus=pelaajanHistoria[i];
+            switch (pelaajaVastaus) {
+                case "":
+                    break;
+                case "kivi":
                     kivi++;
                     break;
-                case 2:
+                case "paperi":
                     paperi++;
                     break;
-                case 3:
+                case "sakset":
                     sakset++;
                     break;
             }
         }
         //katsotaan onko kiven arvo pienin
-        if (kivi<=sakset&&kivi<=paperi) {
-            if (kivi==sakset) {
-                return satunnainenVastaus("paperi");
-            } else if(kivi==paperi) {
-                return satunnainenVastaus("sakset");
-            } else {
-                return "kivi";
-            }
-        } 
+        if (kivi<sakset&&kivi<paperi) {
+            vastaus="paperi";
+        }
         //katsotaan onko sakset pienin
-        else if(sakset<=paperi) {
-            if(sakset==paperi) {
-                return satunnainenVastaus("kivi");
-            } else {
-                return "sakset";
+        else if(sakset<paperi&&sakset<kivi) {
+            vastaus="kivi";
+        }
+        //katsotaan onko paperi pienin
+        else if(paperi<kivi&&paperi<sakset) {
+            vastaus="sakset";
+        }
+        else {
+            //jotkin vastaukset yht‰suuria
+            if (kivi==sakset&&sakset==paperi) {
+                vastaus=satunnainenVastaus("");
             }
-        } 
-        //viimeinen mahdollinen pinein vaihtoehto on paperi
-        else return "paperi";
+            else if (kivi==sakset) {
+                vastaus=satunnainenVastaus("sakset");
+            }
+            else if (kivi==paperi){
+                vastaus=satunnainenVastaus("kivi");
+            }
+            else {
+                vastaus=satunnainenVastaus("paperi");
+            }
+        }
+        vastaukset[1]=vastaus;
     }
     
     //Ai3 ei viel‰ toteutettu
     /*Ai numero 3 tulee pelaamaan vastauksen, 
-    jolla h‰vi‰isi pelaajan viime vastaukselle*/
-    public static String ai3Vastaus() {
-        return "";
+    jolla voittaisi pelaajan viime vastauksen*/
+    void ai3Vastaus(int indeksi) {
+        if (indeksi==0) {
+            indeksi=pelaajanHistoria.length-1;
+        }
+        String vastaus="";
+        String viimeVastaus=pelaajanHistoria[indeksi];
+        switch (viimeVastaus) {
+            case "kivi":
+                vastaus="paperi";
+                break;
+            case "sakset":
+                vastaus="kivi";
+                break;
+            case "paperi":
+                vastaus="sakset";
+                break;
+        }
+        vastaukset[2]=vastaus;
     }
     
     //Ai4 ei viel‰ toteutettu
-    /*Ai numero 3 tulee pelaamaan vastauksen, 
-    jolla voittaisi pelaajan viime vastauksen*/
-    public static String ai4Vastaus() {
-        return "";
+    /*Ai numero 4 tulee pelaamaan vastauksen, 
+    jolla h‰vi‰isi pelaajan viime vastaukselle*/
+    void ai4Vastaus(int indeksi) {
+    if (indeksi==0) {
+            indeksi=pelaajanHistoria.length+1;
+        }
+        String vastaus="";
+        String viimeVastaus=pelaajanHistoria[indeksi];
+        switch (viimeVastaus) {
+            case "kivi":
+                vastaus="sakset";
+                break;
+            case "sakset":
+                vastaus="paperi";
+                break;
+            case "paperi":
+                vastaus="kivi";
+                break;
+        }
+        vastaukset[3]=vastaus;
     }
 }
