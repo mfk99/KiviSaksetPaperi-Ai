@@ -1,25 +1,25 @@
-###Ohjelman yleisrakenne
+Ohjelman yleisrakenne
 Ohjelma koostuu Main- ja AI-luokista. Nämä tullaan jakamaan pienempiin luokkiin selkeyden vuoksi.
 
-###Saavutetut aika- ja tilavaativuudet (m.m. O-analyysit pseudokoodista)
+Saavutetut aika- ja tilavaativuudet (m.m. O-analyysit pseudokoodista)
 
-####Aikavaativuudet
+Aikavaativuudet
 
 Algoritmin aikavaativuus on n^2, koska sen täytyy joka iteraatiossa 
 ensimmäisen pelin jälkeen käydä arvot-taulukko läpi löytääkseen parhaan tekoälyn.
 
-####Tilavaativuudet
+Tilavaativuudet
 
 Luokassa Main on ArrayList-olio, jonka koko on n, missä n on pelattujen pelien määrä.
 Luokassa AI on kolme taulukkoa, vastaukset, pelaajanHistoria ja arvot.
 Vastaukset ja pelaajanHistoria ovat viiden indeksin taulukkoa.
 Taulukko arvot on kaksiulotteinen taulukko, x*5, missä x on tekoälyjen määrä.
 
-###Suorituskyky- ja O-analyysivertailu (mikäli työ vertailupainotteinen)
+Suorituskyky- ja O-analyysivertailu (mikäli työ vertailupainotteinen)
 
 
-###Työn mahdolliset puutteet ja parannusehdotukset
+Työn mahdolliset puutteet ja parannusehdotukset
 
 
-###Lähteet
+Lähteet
 

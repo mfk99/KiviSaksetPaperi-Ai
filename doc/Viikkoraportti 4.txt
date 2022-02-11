@@ -9,3 +9,5 @@ Testaaminen on ollut hankalaa, en ole sitä aikaisemmin tehnyt.
 Tämän takia testausdokumentti vieläkin puuttuu.
 
 Seuraavaksi testaan ja sievennän koodia. Tämän jälkeen lähden toteuttamaan lisää tekoälyjä peliin.
+
+Käytin aikaa n.16 h tällä viikolla.
