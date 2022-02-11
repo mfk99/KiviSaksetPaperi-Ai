@@ -1,0 +1,11 @@
+Tällä viikolla opin testaamisen alkeet ja jatkoin projektin kehittämistä. Aloitin toteutusdokumentin kirjoittamisen.
+
+Ohjelmassa on nyt neljä tekoälyä ja algoritmi osaa valita niistä parhaiten suoriutuvan.
+Ohjelmaan on myös lisätty admin-tila, jossa näkee mitä tekoälyä käytetään ja mitä se aikoo pelata.
+
+Tällä viikolla opin hieman testaamisesta, algoritmien koodaamista tuli kerrattua.
+
+Testaaminen on ollut hankalaa, en ole sitä aikaisemmin tehnyt. 
+Tämän takia testausdokumentti vieläkin puuttuu.
+
+Seuraavaksi testaan ja sievennän koodia. Tämän jälkeen lähden toteuttamaan lisää tekoälyjä peliin.

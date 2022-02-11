@@ -5,17 +5,18 @@ import static KSP.Main.satunnainenVastaus;
 
 public class AI {
     
+    //vastaukset pit‰‰ teko‰lyjen vastauksia
+    private String vastaukset[];
     //pelaajanHistoria pit‰‰ muistissa pelaajan aikaisempia vastauksia
     private String pelaajanHistoria[];
     //arvot pit‰‰ arvoja teko‰lyjen tuloksista
     private int arvot[][];
-    //vastaukset pit‰‰ teko‰lyjen vastauksia
-    private String[] vastaukset;
+    
     
     public AI(int x) {
+        vastaukset=new String[5];
         pelaajanHistoria=new String[5];
         arvot=new int[x][5];
-        vastaukset=new String[5];
         for (int i=0; i<5; i++) {
             pelaajanHistoria[i]="";
             vastaukset[i]="";
@@ -24,7 +25,8 @@ public class AI {
     
     //p‰ivitet‰‰n teko‰lyjen vastaukset
     void paivitaAi(int i) {
-        if (i==0) i=4;
+        i--;
+        if (i==-1) i=4;
         ai1Vastaus();
         ai2Vastaus();
         ai3Vastaus(i);
@@ -82,7 +84,7 @@ public class AI {
                 parasAi=i+1;
             }
         }
-        return parasAi;
+        return 4;
     }
     
     //palautetaan koneen laskema vastaus
@@ -206,9 +208,6 @@ public class AI {
     /*Ai numero 3 tulee pelaamaan vastauksen, 
     jolla voittaisi pelaajan viime vastauksen*/
     void ai3Vastaus(int indeksi) {
-        if (indeksi==0) {
-            indeksi=pelaajanHistoria.length-1;
-        }
         String vastaus="";
         String viimeVastaus=pelaajanHistoria[indeksi];
         switch (viimeVastaus) {
@@ -229,9 +228,6 @@ public class AI {
     /*Ai numero 4 tulee pelaamaan vastauksen, 
     jolla h‰vi‰isi pelaajan viime vastaukselle*/
     void ai4Vastaus(int indeksi) {
-    if (indeksi==0) {
-            indeksi=pelaajanHistoria.length+1;
-        }
         String vastaus="";
         String viimeVastaus=pelaajanHistoria[indeksi];
         switch (viimeVastaus) {
