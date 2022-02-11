@@ -1,0 +1,7 @@
+-classpath 'C:\\Users\\matti\\Hy\\TKT\\TiRalabra\\KSP\\build\\classes\\java\\main;C:\\Users\\matti\\Hy\\TKT\\TiRalabra\\KSP\\build\\resources\\main'
+-d 'C:\\Users\\matti\\Hy\\TKT\\TiRalabra\\KSP\\build\\docs\\javadoc'
+-doctitle 'KSP API'
+-quiet 
+-windowtitle 'KSP API'
+'C:\\Users\\matti\\Hy\\TKT\\TiRalabra\\KSP\\src\\main\\java\\KSP\\AI.java'
+'C:\\Users\\matti\\Hy\\TKT\\TiRalabra\\KSP\\src\\main\\java\\KSP\\Main.java'
