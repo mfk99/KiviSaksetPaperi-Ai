@@ -44,8 +44,10 @@ public class ui {
         String syote="";
         while (true) {
             System.out.println("Mitä haluat tehdä?");
-            System.out.println("Play = Pelaa peliä, Stats = Näytä voittotilastot, "
-                    + "Admin = Näytä mitä kone aikoo pelata sinua vastaan Exit = Poistu pelistä");
+            System.out.println("Play = Pelaa peliä");
+            System.out.println("Stats = Näytä voittotilastot");
+            System.out.println("Admin = Näytä mitä kone aikoo pelata sinua vastaan");
+            System.out.println("Exit = Poistu pelistä");
             syote=s.nextLine();
             if (syote.equalsIgnoreCase("play")) return syote;
             else if (syote.equalsIgnoreCase("stats")) return syote;

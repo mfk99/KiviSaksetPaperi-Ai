@@ -1,24 +1,20 @@
 
 package KSP;
 
-import static KSP.Game.satunnainenVastaus;
-
+import java.util.Random;
 
 public class AI {
     
     //vastaukset pit‰‰ teko‰lyjen vastauksia
-    private String vastaukset[];
+    final private String vastaukset[];
     //pelaajanHistoria pit‰‰ muistissa pelaajan aikaisempia vastauksia
-    private String pelaajanHistoria[];
+    final private String pelaajanHistoria[];
     //arvot pit‰‰ arvoja teko‰lyjen tuloksista
-    private int arvot[][];
-    
+    final private int arvot[][];
+    final private Random r;
     
     public AI(int x) {
-        ai1 ai1=new ai1();
-        ai2 ai2=new ai2();
-        ai3 ai3=new ai3();
-        ai4 ai4=new ai4();
+        r=new Random();
         vastaukset=new String[5];
         pelaajanHistoria=new String[5];
         arvot=new int[x][5];
@@ -77,20 +73,25 @@ public class AI {
     }
     
     int laskeParasAi() {
-        //lasketaan mik‰ ai voittaisi eniten pelej‰ viimeisen viiden pelin perusteella
-        int suurin=-5;
-        int parasAi=0;
+        /*arvotaan teko‰lyist‰ se, joka pelaa tulevalla vuorolla
+        jokainen ai saa 5 "lipuketta", jkokaisesta voitosta saa lipukkeen lis‰‰,
+        h‰viˆst‰ menett‰‰ yhden ja tasapelist‰ ei ole muutosta */
+        int[] lipukkeet=new int[4];
+        int koko=0;
         for (int i=0; i<arvot.length; i++) {
-            int nyky=0;
-            for (int j=0; j<5; j++) {
-                nyky+=arvot[i][j];
-            }
-            if (suurin<nyky) {
-                suurin=nyky;
-                parasAi=i+1;
+            lipukkeet[i]=5;
+            koko+=5;
+            for (int j=0; j<arvot[0].length; j++) {
+                int arvo=arvot[i][j];
+                lipukkeet[i]+=arvo;
+                koko+=arvo;
             }
         }
-        return parasAi;
+        int voittaja=r.nextInt(koko);
+        if (voittaja>=lipukkeet[0]) return 1;
+        if (voittaja>=lipukkeet[1]) return 2;
+        if (voittaja>=lipukkeet[2]) return 3;
+        else return 4;
     }
     
     //palautetaan koneen laskema vastaus

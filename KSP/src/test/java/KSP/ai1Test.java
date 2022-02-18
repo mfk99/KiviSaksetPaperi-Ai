@@ -16,11 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author matti
  */
-public class MainTest {
+public class ai1Test {
     
-    //testejä ei olla toteutettu
-    
-    public MainTest() {
+    public ai1Test() {
     }
     
     @BeforeClass
@@ -40,14 +38,17 @@ public class MainTest {
     }
 
     /**
-     * Test of main method, of class Main.
+     * Test of vastaus method, of class ai1.
      */
     @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        Main.main(args);
+    public void testVastaus() {
+        System.out.println("vastaus");
+        String[] pelaajanHistoria = null;
+        String expResult = "";
+        String result = ai1.vastaus(pelaajanHistoria);
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+    
 }

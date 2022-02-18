@@ -38,8 +38,9 @@ public class Game {
             if (admin) {
                 if (ai==1 || pelatutPelit<1) {
                     System.out.println("Satunnainen ai aikoo valita käden "+koneVastaus);
+                } else {
+                    System.out.println("Ai nro "+parasAi+ " aikoo valita käden "+koneVastaus);
                 }
-                System.out.println("Ai nro "+parasAi+ " aikoo valita käden "+koneVastaus);
             }
             
             pelaajaVastaus=ui.pyydaPelaajaltaVastaus();
