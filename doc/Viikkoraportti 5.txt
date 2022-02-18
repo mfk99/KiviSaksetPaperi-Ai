@@ -1,0 +1,20 @@
+Tällä viikolla tein vertaisarvioinnin, tein 
+tekoälyn valinnasta  enemmän Markovin ketjuja 
+muistuttavan prosessin.
+
+Projekti nyt arpoo painotetusti mikä tekoäly 
+pääsee pelaamaan pelaajaa vastaan.
+
+Opin tutkimaan toisten koodia ja miten 
+samat asiat voi toteuttaa erilaisilla metodeilla.
+
+Yksikkötestaus on vieläkin kesken ja pyrin etenemään siinä.
+Pohdin kannattaako tekoälyn onnistumista mitata enemmän 
+voittoprosenttien kautta vai aikavaativuuden avulla.
+Todennäköisesti toteutan kummatkin, mutta mietin kumpi 
+on ensisijaisesti tärkeämpi.
+
+Seuraavaksi teen yksikkötestaukset sekä toteutan Markovin 
+ketjuille olennaiset tilat ja tilamuutokset.
+
+Käytin projektiin tällä viikolla n.12 h.
