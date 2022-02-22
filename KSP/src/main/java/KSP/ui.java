@@ -1,14 +1,14 @@
 
 package KSP;
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Timer;
 
 public class ui {
     public Game peli;
-    
+    public Statistics stats;
     private boolean admin=false;
-    //tilastossa 0 on tasapeli, 1 pelaajan voitto ja 2 koneen voitto
-    public static ArrayList<Integer> tilasto =new ArrayList<Integer>();
+    
     
     //käyttöliittymä
     private static Scanner s;
@@ -24,10 +24,10 @@ public class ui {
                 switch (kasky) {
                     case "play":
                         String ai=valitseAi();
-                        peli.pelaa(Integer.valueOf(ai), admin);
+                        peli.pelaa(Integer.valueOf(ai), admin, false);
                         break;
                     case "stats":
-                        tulostaTilastot(tilasto);
+                        tulostaTilastot();
                         break;
                     case "admin":
                         vaihdaTila();
@@ -44,10 +44,10 @@ public class ui {
         String syote="";
         while (true) {
             System.out.println("Mitä haluat tehdä?");
-            System.out.println("Play = Pelaa peliä");
-            System.out.println("Stats = Näytä voittotilastot");
-            System.out.println("Admin = Näytä mitä kone aikoo pelata sinua vastaan");
-            System.out.println("Exit = Poistu pelistä");
+            System.out.println("play = Pelaa peliä");
+            System.out.println("stats = Näytä voittotilastot");
+            System.out.println("admin = Näytä mitä kone aikoo pelata sinua vastaan");
+            System.out.println("exit = Poistu pelistä");
             syote=s.nextLine();
             if (syote.equalsIgnoreCase("play")) return syote;
             else if (syote.equalsIgnoreCase("stats")) return syote;
@@ -101,7 +101,8 @@ public class ui {
         
     }
     
-    void tulostaTilastot(ArrayList <Integer> tilasto) {
+    void tulostaTilastot() {
+        ArrayList <Integer> tilasto=stats.getTulokset();
         if (tilasto.isEmpty()) {
             System.out.println("Et ole pelannut yhtään peliä!");
         } //tarkistetaan onko pelejä pelattu
@@ -160,5 +161,9 @@ public class ui {
         
     }
     
+    void diagnostics() {
+        Timer timer=new Timer();
+        
+    }
     
 }

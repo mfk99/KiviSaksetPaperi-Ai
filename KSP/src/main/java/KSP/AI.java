@@ -5,23 +5,12 @@ import java.util.Random;
 
 public class AI {
     
-    //vastaukset pit‰‰ teko‰lyjen vastauksia
-    final private String vastaukset[];
-    //pelaajanHistoria pit‰‰ muistissa pelaajan aikaisempia vastauksia
-    final private String pelaajanHistoria[];
-    //arvot pit‰‰ arvoja teko‰lyjen tuloksista
-    final private int arvot[][];
     final private Random r;
+    final private Statistics stats;
     
     public AI(int x) {
         r=new Random();
-        vastaukset=new String[5];
-        pelaajanHistoria=new String[5];
-        arvot=new int[x][5];
-        for (int i=0; i<5; i++) {
-            pelaajanHistoria[i]="";
-            vastaukset[i]="";
-        }
+        stats=new Statistics(x);
     }
     
     //p‰ivitet‰‰n teko‰lyjen vastaukset
@@ -29,44 +18,42 @@ public class AI {
         i--;
         //v‰ltet‰‰n nullPointerException
         if (i==-1) i=4;
-        vastaukset[0]=ai1.vastaus(pelaajanHistoria);
-        vastaukset[1]=ai2.vastaus(pelaajanHistoria);
-        vastaukset[2]=ai3.vastaus(pelaajanHistoria, i);
-        vastaukset[3]=ai4.vastaus(pelaajanHistoria, i);
+        stats.setAiVastaukset(0, ai1.vastaus(stats.getPelaajaVastaukset()));
+        stats.setAiVastaukset(1, ai1.vastaus(stats.getPelaajaVastaukset()));
+        stats.setAiVastaukset(2, ai3.vastaus(stats.getPelaajaVastaukset(), i));
+        stats.setAiVastaukset(3, ai4.vastaus(stats.getPelaajaVastaukset(), i));
     }
     
-    /* syˆtt‰‰ vastauksen historia-taulukkoon, 
-    hyv‰ pit‰‰ erill‰‰n laskeTulokset-metodista */
     void syotaVastaus(String pelaajaVastaus,int indeksi) {
-        pelaajanHistoria[indeksi]=pelaajaVastaus;
+        stats.setPelaajaVastaukset(indeksi, pelaajaVastaus);
     }
     
     //lasketaan teko‰lyjen vastauksien tulokset
     void laskeTulokset(String pelaajaVastaus, int indeksi) {
         for (int i=0; i<4; i++) {
-            String aiVastaus=vastaukset[i];
+            String aiVastaus=stats.getAiVastaukset()[i];
             //katsotaan onko peli tasapeli
             if (aiVastaus.equals(pelaajaVastaus)) {
-                arvot[i][indeksi]=0;
+                stats.setAiTulokset(i, indeksi, 0);
             }
             //peli ei ole tasapeli, katsotaan kumpi voitti
             else if (pelaajaVastaus.equals("kivi")) {
                 if (aiVastaus.equals("sakset")) {
-                    arvot[i][indeksi]=-1;
+                    stats.setAiTulokset(i, indeksi, -1);
                 } else {
-                    arvot[i][indeksi]=1;
+                    stats.setAiTulokset(i, indeksi, 1);
                 }
             } else if (pelaajaVastaus.equals("sakset")) {
                 if (aiVastaus.equals("paperi")) {
-                    arvot[i][indeksi]=-1;
+                    stats.setAiTulokset(i, indeksi, -1);
                 } else {
-                    arvot[i][indeksi]=1;
+                    stats.setAiTulokset(i, indeksi, 1);
                 }
             } else {
                 if (aiVastaus.equals("kivi")) {
-                    arvot[i][indeksi]=-1;
+                    stats.setAiTulokset(i, indeksi, -1);
                 } else {
-                    arvot[i][indeksi]=1;
+                    stats.setAiTulokset(i, indeksi, 1);
                 }
             }
         }
@@ -78,11 +65,12 @@ public class AI {
         h‰viˆst‰ menett‰‰ yhden ja tasapelist‰ ei ole muutosta */
         int[] lipukkeet=new int[4];
         int koko=0;
-        for (int i=0; i<arvot.length; i++) {
+        int[][] tulokset=stats.getAiTulokset();
+        for (int i=0; i<tulokset.length; i++) {
             lipukkeet[i]=5;
             koko+=5;
-            for (int j=0; j<arvot[0].length; j++) {
-                int arvo=arvot[i][j];
+            for (int j=0; j<tulokset[0].length; j++) {
+                int arvo=stats.getAiTulokset()[i][j];
                 lipukkeet[i]+=arvo;
                 koko+=arvo;
             }
@@ -96,6 +84,6 @@ public class AI {
     
     //palautetaan koneen laskema vastaus
     String haeVastaus(int i) {
-        return vastaukset[i-1];
+        return stats.getAiVastaukset()[i-1];
     }
 }

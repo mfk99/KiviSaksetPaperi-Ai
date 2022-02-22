@@ -13,7 +13,7 @@ public class Game {
         tekoaly=new AI(4);
     }
     
-    void pelaa(int ai, boolean admin) {
+    void pelaa(int ai, boolean admin, boolean diagnostic) {
         //aloitetaan looppi ja jaetaan satunnainen vastaus koneelle
         while (true) {
             int parasAi=0;
@@ -88,15 +88,15 @@ public class Game {
             //tilastoidaan vastaus ja tulostetaan tulos
             //tilastossa pelaajan voitto on 0, koneen voitto 1 ja tasapeli 2
             if (pelaajaVoitti) {
-                ui.tilasto.add(0);
+                Statistics.tulokset.add(0);
                 System.out.println("Pelaaja voitti!");
             }
             if (koneVoitti) {
-                ui.tilasto.add(1);
+                Statistics.tulokset.add(1);
                 System.out.println("Kone voitti!");
             }
             if (!pelaajaVoitti && !koneVoitti) {
-                ui.tilasto.add(2);
+                Statistics.tulokset.add(2);
                 System.out.println("Tasapeli!");
             }
                 
