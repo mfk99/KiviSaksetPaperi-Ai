@@ -6,6 +6,7 @@
 package KSP;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,11 +20,17 @@ import static org.junit.Assert.*;
  */
 public class uiTest {
     
+    public Game peli;
+    public Statistics stats;
+    private static Scanner s;
+    
     public uiTest() {
     }
     
     @BeforeClass
-    public static void setUpClass() {
+    public void setUpClass() {
+        peli=new Game();
+        s=new Scanner(System.in);
     }
     
     @AfterClass
@@ -111,7 +118,7 @@ public class uiTest {
         System.out.println("tulostaTilastot");
         ArrayList<Integer> tilasto = null;
         ui instance = new ui();
-        instance.tulostaTilastot(tilasto);
+        instance.tulostaTilastot();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -124,6 +131,18 @@ public class uiTest {
         System.out.println("vaihdaTila");
         ui instance = new ui();
         instance.vaihdaTila();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of diagnostics method, of class ui.
+     */
+    @Test
+    public void testDiagnostics() {
+        System.out.println("diagnostics");
+        ui instance = new ui();
+        instance.diagnostics();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

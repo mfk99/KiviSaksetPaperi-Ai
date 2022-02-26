@@ -13,7 +13,7 @@ public class Game {
         tekoaly=new AI(4);
     }
     
-    void pelaa(int ai, boolean admin, boolean diagnostic) {
+    void pelaa(int ai, boolean admin) {
         //aloitetaan looppi ja jaetaan satunnainen vastaus koneelle
         while (true) {
             int parasAi=0;
@@ -29,7 +29,7 @@ public class Game {
             /*jos ollaan pelattu ainakin 1 peli, lasketaan paras AI
             ja asetetaan koneen vastaukseksi sen tekoälyn vastaus */
             else {
-                tekoaly.paivitaAi(indeksi);
+                tekoaly.paivitaAi(indeksi, false);
                 parasAi=tekoaly.laskeParasAi();
                 koneVastaus=tekoaly.haeVastaus(parasAi);
             }
@@ -44,6 +44,8 @@ public class Game {
             }
             
             pelaajaVastaus=ui.pyydaPelaajaltaVastaus();
+            
+            if (pelaajaVastaus.equals("exit")) break;
             
             tekoaly.syotaVastaus(pelaajaVastaus, indeksi);
             if (pelatutPelit>0) tekoaly.laskeTulokset(pelaajaVastaus, indeksi);
@@ -99,9 +101,6 @@ public class Game {
                 Statistics.tulokset.add(2);
                 System.out.println("Tasapeli!");
             }
-                
-            boolean uudestaan =ui.kysyUusiPeli();
-            if (!uudestaan) break;
         }
     }
 

@@ -46,7 +46,7 @@ public class GameTest {
         int ai = 0;
         boolean admin = false;
         Game instance = new Game();
-        instance.pelaa(ai, admin);
+        //instance.pelaa(ai, admin);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

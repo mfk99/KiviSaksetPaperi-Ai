@@ -45,8 +45,8 @@ public class ai1Test {
         System.out.println("vastaus");
         String[] pelaajanHistoria = null;
         String expResult = "";
-        String result = ai1.vastaus(pelaajanHistoria);
-        assertEquals(expResult, result);
+        //String result = ai1.vastaus(pelaajanHistoria);
+        //assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

@@ -1,0 +1,17 @@
+Tällä viikolla tein vertaisarvioinnin ja lisäsin projektiin tavan testata 
+esim. tekoälyjen voittoprosenttia sekä suoritusaikoja.
+
+Ohjelmassa on nyt toiminto testata tekoälyn toimivuutta automatisoidusti.
+Tämän avulla huomasin, että tekoäly toimii melko kehnosti jopa täysin ennustettavaa 
+vastusta vastaan.
+
+Opin paljon vertaisarvioinnista. On paljon pieniä ongelmia joita olisin voinut välttää jos projekti 
+olisi ollut paremmin suunniteltu alusta lähtien. Nämä on saatu ratkaistua, mutta vievät aikaa jota 
+voisi käyttää paremmin projektin edistämiseen.
+
+Vaikeuksia ei ole ollut.
+
+Painotan voittavan algoritmin jatkoa seuraavassa erässä ja 
+tämän jälkeen aloitan testaukset sekä toteutan yksikkötestauksen.
+
+Aikaa käytetty tällä viikolla: 12h

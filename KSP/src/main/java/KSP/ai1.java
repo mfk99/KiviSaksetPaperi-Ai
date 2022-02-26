@@ -10,26 +10,8 @@ public class ai1 {
     public ai1() {
     }
     
-    static String vastaus(String[] pelaajanHistoria) {
-        int kivi=0;
-        int sakset=0;
-        int paperi=0;
-        for (int i=0; i<pelaajanHistoria.length; i++) {
-            String pelaajaVastaus=pelaajanHistoria[i];
-            switch (pelaajaVastaus) {
-                case "":
-                    break;
-                case "kivi":
-                    kivi++;
-                    break;
-                case "paperi":
-                    paperi++;
-                    break;
-                case "sakset":
-                    sakset++;
-                    break;
-            }
-        }
+    static String vastaus(int kivi, int sakset, int paperi) {
+        
         /*katsotaan onko yksi kahta isompi
         jos on pelattu eniten kiveä, se voitetaan paperilla jne.*/
         if (sakset<kivi && paperi<kivi) {

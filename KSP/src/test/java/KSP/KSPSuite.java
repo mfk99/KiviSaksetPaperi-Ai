@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author matti
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({KSP.ai4Test.class, KSP.ai1Test.class, KSP.AITest.class, KSP.uiTest.class, KSP.GameTest.class, KSP.ai2Test.class, KSP.ai3Test.class, KSP.MainTest.class})
+@Suite.SuiteClasses({ai4Test.class, ai1Test.class, AITest.class, uiTest.class, StatisticsTest.class, GameTest.class, ai2Test.class, ai3Test.class, MainTest.class})
 public class KSPSuite {
 
     @BeforeClass

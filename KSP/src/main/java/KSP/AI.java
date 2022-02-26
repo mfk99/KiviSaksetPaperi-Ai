@@ -14,14 +14,46 @@ public class AI {
     }
     
     //päivitetään tekoälyjen vastaukset
-    void paivitaAi(int i) {
+    void paivitaAi(int i, boolean test) {
+        long aiAlku=0;
+        if (test) {
+            aiAlku=System.nanoTime();
+        }
         i--;
         //vältetään nullPointerException
         if (i==-1) i=4;
-        stats.setAiVastaukset(0, ai1.vastaus(stats.getPelaajaVastaukset()));
-        stats.setAiVastaukset(1, ai1.vastaus(stats.getPelaajaVastaukset()));
-        stats.setAiVastaukset(2, ai3.vastaus(stats.getPelaajaVastaukset(), i));
-        stats.setAiVastaukset(3, ai4.vastaus(stats.getPelaajaVastaukset(), i));
+        String[] vastaukset=stats.getPelaajaVastaukset();
+        int kivi=0;
+        int sakset=0;
+        int paperi=0;
+        for (int j=0; j<vastaukset.length; j++) {
+            String vastaus=vastaukset[j];
+            if (vastaus.equals("kivi")) kivi++;
+            else if (vastaus.equals("sakset")) sakset++;
+            else paperi++;
+        }
+        if (test) {
+            long ai1Alku=System.nanoTime();
+            stats.setAiVastaukset(0, ai1.vastaus(kivi, sakset, paperi));
+            long ai2Alku=System.nanoTime();
+            stats.setAiVastaukset(1, ai2.vastaus(kivi, sakset, paperi));
+            long ai3Alku=System.nanoTime();
+            stats.setAiVastaukset(2, ai3.vastaus(stats.getPelaajaVastaukset(), i));
+            long ai4Alku=System.nanoTime();
+            stats.setAiVastaukset(3, ai4.vastaus(stats.getPelaajaVastaukset(), i));
+            long aiLoppu=System.nanoTime();
+            System.out.println("Ai 1 päivityksessä meni "+(ai2Alku-ai1Alku)+" nanosekuntia");
+            System.out.println("Ai 2 päivityksessä meni "+(ai3Alku-ai2Alku)+" nanosekuntia");
+            System.out.println("Ai 3 päivityksessä meni "+(ai4Alku-ai3Alku)+" nanosekuntia");
+            System.out.println("Ai 4 päivityksessä meni "+(aiLoppu-ai4Alku)+" nanosekuntia");
+            System.out.println("Koko päivityksessä meni "+(aiLoppu-aiAlku)+" nanosekuntia");
+            
+        } else {
+            stats.setAiVastaukset(0, ai1.vastaus(kivi, sakset, paperi));
+            stats.setAiVastaukset(1, ai2.vastaus(kivi, sakset, paperi));
+            stats.setAiVastaukset(2, ai3.vastaus(stats.getPelaajaVastaukset(), i));
+            stats.setAiVastaukset(3, ai4.vastaus(stats.getPelaajaVastaukset(), i));
+        }
     }
     
     void syotaVastaus(String pelaajaVastaus,int indeksi) {
