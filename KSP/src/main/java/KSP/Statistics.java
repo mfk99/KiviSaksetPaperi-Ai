@@ -68,6 +68,8 @@ public class Statistics {
         Random r=new Random();
         ArrayList<Integer> testiTulokset=new ArrayList<>();
         String pelaajaVastaus="";
+        boolean pelaajaVoitti=false;
+        boolean koneVoitti=false;
         for (int i=0; i<kerrat; i++) {
             int parasAi=0;
             String koneVastaus;
@@ -78,7 +80,7 @@ public class Statistics {
             }
             else {
                 tekoaly.paivitaAi(indeksi, true);
-                parasAi=tekoaly.laskeParasAi();
+                parasAi=tekoaly.laskeParasAi(parasAi, koneVoitti);
                 koneVastaus=tekoaly.haeVastaus(parasAi);
                 
                 //katsotaan vaihdetaanko vastaus
@@ -92,8 +94,6 @@ public class Statistics {
             if (i>0) tekoaly.laskeTulokset(pelaajaVastaus, indeksi);
             
             //katsotaan pelin tulos
-            boolean pelaajaVoitti=false;
-            boolean koneVoitti=false;
             if (pelaajaVastaus.equals(koneVastaus)) { //peli on tasapeli
                 System.out.println("Kummatkin valitsivat "+pelaajaVastaus);
             }

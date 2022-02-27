@@ -15,6 +15,8 @@ public class Game {
     
     void pelaa(int ai, boolean admin) {
         //aloitetaan looppi ja jaetaan satunnainen vastaus koneelle
+        boolean pelaajaVoitti=false;
+        boolean koneVoitti=false;
         while (true) {
             int parasAi=0;
             String pelaajaVastaus="";
@@ -30,7 +32,7 @@ public class Game {
             ja asetetaan koneen vastaukseksi sen tekoälyn vastaus */
             else {
                 tekoaly.paivitaAi(indeksi, false);
-                parasAi=tekoaly.laskeParasAi();
+                parasAi=tekoaly.laskeParasAi(parasAi, koneVoitti);
                 koneVastaus=tekoaly.haeVastaus(parasAi);
             }
             
@@ -52,8 +54,6 @@ public class Game {
             pelatutPelit++;
             
             //katsotaan pelin tulos
-            boolean pelaajaVoitti=false;
-            boolean koneVoitti=false;
             if (pelaajaVastaus.equals(koneVastaus)) { //peli on tasapeli
                 System.out.println("Kummatkin valitsivat "+pelaajaVastaus);
             }

@@ -91,7 +91,7 @@ public class AI {
         }
     }
     
-    int laskeParasAi() {
+    int laskeParasAi(int nykyinen, boolean voitto) {
         /*arvotaan teko‰lyist‰ se, joka pelaa tulevalla vuorolla
         jokainen ai saa 5 "lipuketta", jkokaisesta voitosta saa lipukkeen lis‰‰,
         h‰viˆst‰ menett‰‰ yhden ja tasapelist‰ ei ole muutosta */
@@ -106,6 +106,16 @@ public class AI {
                 lipukkeet[i]+=arvo;
                 koko+=arvo;
             }
+        }
+        //jos ai on voittanut viime pelin, rohkaistaan saman ain k‰ytt‰mist‰
+        if (voitto) {
+            lipukkeet[nykyinen]+=koko;
+            
+            //siirret‰‰n muiden teko‰lyjen lipukkeiden arvoja
+            for (int i=nykyinen; i<4; i++) {
+                lipukkeet[i]+=koko;
+            }
+            koko+=koko;
         }
         int voittaja=r.nextInt(koko);
         if (voittaja>=lipukkeet[0]) return 1;

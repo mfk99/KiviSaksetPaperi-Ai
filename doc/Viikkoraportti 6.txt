@@ -3,7 +3,9 @@ esim. tekoälyjen voittoprosenttia sekä suoritusaikoja.
 
 Ohjelmassa on nyt toiminto testata tekoälyn toimivuutta automatisoidusti.
 Tämän avulla huomasin, että tekoäly toimii melko kehnosti jopa täysin ennustettavaa 
-vastusta vastaan.
+vastusta vastaan. Lisäsin tekoälyn lasskentaan toiminnon, jossa suositaan nykyistä tekoälyä
+mikäli se voitti viime pelin ja arpoo normaalisti mikäli hävittiin tai tuli tasapeli.
+Tämän olisi tarkoitus saada algoritmi pelaamaan reaktiivisemmin pelitapojen vaihteluun.
 
 Opin paljon vertaisarvioinnista. On paljon pieniä ongelmia joita olisin voinut välttää jos projekti 
 olisi ollut paremmin suunniteltu alusta lähtien. Nämä on saatu ratkaistua, mutta vievät aikaa jota 
@@ -11,7 +13,7 @@ voisi käyttää paremmin projektin edistämiseen.
 
 Vaikeuksia ei ole ollut.
 
-Painotan voittavan algoritmin jatkoa seuraavassa erässä ja 
+Koitan tasapainottaa algoritmin päätöksentekoa ja 
 tämän jälkeen aloitan testaukset sekä toteutan yksikkötestauksen.
 
-Aikaa käytetty tällä viikolla: 12h
+Aikaa käytetty tällä viikolla: 14h
