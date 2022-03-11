@@ -5,52 +5,50 @@ import java.util.Random;
 
 public class Game {
     
-    public AI tekoaly;
-    public int pelatutPelit;
+    private AI tekoaly;
+    private int pelatutPelit;
     
     public Game() {
+        tekoaly=new AI();
         pelatutPelit=0;
-        tekoaly=new AI(4);
     }
     
-    void pelaa(int ai, boolean admin) {
+    void pelaa(boolean admin) {
         //aloitetaan looppi ja jaetaan satunnainen vastaus koneelle
-        boolean pelaajaVoitti=false;
-        boolean koneVoitti=false;
+        String koneVastaus;
+        int parasAi=tekoaly.getAiTila(0);
         while (true) {
-            int parasAi=0;
             String pelaajaVastaus="";
-            String koneVastaus;
+            boolean pelaajaVoitti=false;
+            boolean koneVoitti=false;
             //lasketaan mihin indeksiin valinta sijoitetaan
             int indeksi=pelatutPelit%5;
-            /*mik‰li ei ole dataa tai pelataan t‰ysin 
-            satunnaisella teko‰lyll‰, valitaan satunnainen vastaus*/
-            if (ai==1 || pelatutPelit<1) {
+            //haetaan koneelle vastaus
+            if (parasAi!=0) { 
+                //jos ai on valittu haetaan silt√§ vastaus
+                koneVastaus=tekoaly.haeVastaus(tekoaly.getAiTila(parasAi));
+            } else { 
+                //muulloin valitaan satunnainen vastaus
                 koneVastaus=satunnainenVastaus("");
             }
-            /*jos ollaan pelattu ainakin 1 peli, lasketaan paras AI
-            ja asetetaan koneen vastaukseksi sen teko‰lyn vastaus */
-            else {
-                tekoaly.paivitaAi(indeksi, false);
-                parasAi=tekoaly.laskeParasAi(parasAi, koneVoitti);
-                koneVastaus=tekoaly.haeVastaus(parasAi);
-            }
             
-            //n‰ytet‰‰n teko‰ly ja sen vastaus jos admin on p‰‰ll‰
+            //n√§ytet√§√§n teko√§ly ja sen vastaus jos admin on p√§√§ll√§
             if (admin) {
-                if (ai==1 || pelatutPelit<1) {
-                    System.out.println("Satunnainen ai aikoo valita k‰den "+koneVastaus);
+                if (tekoaly.getAiTila(0)==0) {
+                    System.out.println("Satunnainen ai aikoo valita k√§den "+koneVastaus);
                 } else {
-                    System.out.println("Ai nro "+parasAi+ " aikoo valita k‰den "+koneVastaus);
+                    System.out.println("Teko√§lyn "+parasAi+ " versio "
+                            +tekoaly.getAiTila(parasAi)+" aikoo valita k√§den "+koneVastaus);
                 }
             }
             
             pelaajaVastaus=ui.pyydaPelaajaltaVastaus();
-            
             if (pelaajaVastaus.equals("exit")) break;
+            /*jos validi vastaus on sy√§tetty, lis√§t√§√§n se historiaan ja 
+            p√§ivitet√§√§n teko√§lyjen vastaukset */
+            tekoaly.syotaVastaus(indeksi, pelaajaVastaus);
+            tekoaly.paivitaAi(indeksi, false);
             
-            tekoaly.syotaVastaus(pelaajaVastaus, indeksi);
-            if (pelatutPelit>0) tekoaly.laskeTulokset(pelaajaVastaus, indeksi);
             pelatutPelit++;
             
             //katsotaan pelin tulos
@@ -100,6 +98,10 @@ public class Game {
             if (!pelaajaVoitti && !koneVoitti) {
                 Statistics.tulokset.add(2);
                 System.out.println("Tasapeli!");
+            }
+            //valitaan uusi teko√§ly jos on pelattu viisi peli√§ vaihtamatta
+            if (pelatutPelit%5==0) {
+                parasAi=tekoaly.laskeParasAi();
             }
         }
     }

@@ -7,34 +7,42 @@ import java.util.Random;
 
 public class Statistics {
     
-    
-    //aiVastaukset pit‰‰ teko‰lyjen vastauksia
-    final private String aiVastaukset[];
-    //pelaajaVastaukset pit‰‰ muistissa pelaajan aikaisempia vastauksia
+    //aiVastaukset pit√§v√§t eri teko√§lyjen vastauksia
+    final private String ai1Vastaukset[][];
+    final private String ai2Vastaukset[][];
+    final private String ai3Vastaukset[][];
+    //pelaajaVastaukset pit√§√§ muistissa pelaajan aikaisempia vastauksia
     final private String pelaajaVastaukset[];
-    //tulokset pit‰‰ arvoja teko‰lyjen tuloksista
-    final private int aiTulokset[][];
+    //tulokset pit√§√§ arvoja teko√§lyjen tuloksista
+    final private int aiTulokset[];
     //tilastossa 0 on tasapeli, 1 pelaajan voitto ja 2 koneen voitto
     public static ArrayList<Integer> tulokset =new ArrayList<Integer>();
     
-    public Statistics(int x) {
-        aiVastaukset=new String[5];
-        pelaajaVastaukset=new String[5];
-        aiTulokset=new int[x][5];
+    public Statistics(int focus) {
+        ai1Vastaukset=new String[2][5];
+        ai2Vastaukset=new String[2][5];
+        ai3Vastaukset=new String[2][5];
+        pelaajaVastaukset=new String[focus];
+        aiTulokset=new int[6];
         
-        for (int i=0; i<5; i++) {
+        for (int i=0; i<focus; i++) {
             pelaajaVastaukset[i]="";
-            aiVastaukset[i]="";
         }
     }
     
     
-    void setAiVastaukset (int i, String s) {
-        aiVastaukset[i]=s;
+    void setAiVastaukset (int ai, int v, int indeksi, String s) {
+        v--;
+        if (ai==1) ai1Vastaukset[v][indeksi]=s;
+        if (ai==2) ai2Vastaukset[v][indeksi]=s;
+        if (ai==3) ai3Vastaukset[v][indeksi]=s;
     }
     
-    String[] getAiVastaukset() {
-        return aiVastaukset;
+    String[][] getAiVastaukset(int ai) {
+        if (ai==1) return ai1Vastaukset;
+        if (ai==2) return ai2Vastaukset;
+        if (ai==3) return ai3Vastaukset;
+        return null;
     }
     
     void setPelaajaVastaukset (int i, String s) {
@@ -45,17 +53,18 @@ public class Statistics {
         return pelaajaVastaukset;
     }
     
-    void setAiTulokset (int i, int j, int x) {
-        aiTulokset[i][j]=x;
+    void setAiTulokset (int i, int x) {
+        aiTulokset[i]=x;
     }
     
-    int[][] getAiTulokset() {
+    int[] getAiTulokset() {
         return  aiTulokset;
     }
     
     void addTulokset(int x) {
         tulokset.add(x);
     }
+    
     
     ArrayList getTulokset () {
         return tulokset;
@@ -64,7 +73,7 @@ public class Statistics {
     void test(int kerrat, int samaVastaus) {
         //metodi keskiarvoisten voittoprosenttien ja aikojen laskemiseen
         long testiAikaAlku=System.nanoTime();
-        AI tekoaly =new AI(4);
+        AI tekoaly =new AI();
         Random r=new Random();
         ArrayList<Integer> testiTulokset=new ArrayList<>();
         String pelaajaVastaus="";
@@ -72,32 +81,38 @@ public class Statistics {
         boolean koneVoitti=false;
         for (int i=0; i<kerrat; i++) {
             int parasAi=0;
-            String koneVastaus;
+            String koneVastaus="";
             int indeksi=i%5;
-            if (i==0) {
-                koneVastaus=satunnainenVastaus("");
+            
+            //annetaan pelaajalle vastaus
+            if (i==0) { //jos ensimm‰inen kierros, arvotaan satunnainen
                 pelaajaVastaus=satunnainenVastaus("");
-            }
-            else {
-                tekoaly.paivitaAi(indeksi, true);
-                parasAi=tekoaly.laskeParasAi(parasAi, koneVoitti);
-                koneVastaus=tekoaly.haeVastaus(parasAi);
-                
-                //katsotaan vaihdetaanko vastaus
-                int random=r.nextInt(100);
-                if (random>=samaVastaus) { //arvotaan uusi vastaus
-                    pelaajaVastaus=Game.satunnainenVastaus(pelaajaVastaus);
-                }
+            } else { //muulloin arvotaan vaihdetaanko vastaus
+                int vaihto=r.nextInt(100);
+                if (vaihto>samaVastaus) pelaajaVastaus=satunnainenVastaus(pelaajaVastaus);
             }
             
-            tekoaly.syotaVastaus(pelaajaVastaus, indeksi);
-            if (i>0) tekoaly.laskeTulokset(pelaajaVastaus, indeksi);
+            tekoaly.syotaVastaus(indeksi, pelaajaVastaus);
+            tekoaly.paivitaAi(indeksi, true);
+            
+            //vaihdetaan teko‰ly jos on pelattu viisi peli‰
+            if (i!=0 && i%5==0) {
+                parasAi=tekoaly.laskeParasAi();
+                System.out.println("Paras ai on "+parasAi);
+            }
+            //annetaan teko‰lylle vastaus
+            if (parasAi!=0) {
+                koneVastaus=tekoaly.haeVastaus(tekoaly.getAiTila(parasAi));
+            } else { 
+                koneVastaus=satunnainenVastaus("");
+            }
+            
+            tekoaly.syotaVastaus(indeksi, pelaajaVastaus);
             
             //katsotaan pelin tulos
             if (pelaajaVastaus.equals(koneVastaus)) { //peli on tasapeli
                 System.out.println("Kummatkin valitsivat "+pelaajaVastaus);
-            }
-            else { //peli ei ole tasapeli
+            } else { //peli ei ole tasapeli
                 switch (pelaajaVastaus) {
                     case "kivi":
                         if (koneVastaus.equals("sakset")) {
@@ -141,6 +156,6 @@ public class Statistics {
         
         ui.tulostaTilastot(testiTulokset);
         long testiAikaLoppu=System.nanoTime();
-        System.out.println("Testiss‰ kului yhteens‰ "+(testiAikaLoppu-testiAikaAlku)+" nanosekuntia");
+        System.out.println("Testiss√§ kului yhteens√§ "+(testiAikaLoppu-testiAikaAlku)+" nanosekuntia");
     }
 }

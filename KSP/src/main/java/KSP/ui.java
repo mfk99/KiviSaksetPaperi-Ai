@@ -16,16 +16,15 @@ public class ui {
     
     void aloita() {
         boolean kaynnissa=true;
-        stats=new Statistics(4);
+        //parametri on teko√§lyn keskittymispituus
+        stats=new Statistics(5);
         while (kaynnissa) {
             String kasky=ui.naytaVaihtoehdot();
                 switch (kasky) {
                     case "play":
-                        String ai=valitseAi();
-                        peli.pelaa(Integer.valueOf(ai), admin);
+                        peli.pelaa(admin);
                         break;
                     case "stats":
-                        if (stats.getTulokset()==null) System.out.println("ˆ,ao");
                         tulostaTilastot(stats.getTulokset());
                         break;
                     case "admin":
@@ -47,40 +46,27 @@ public class ui {
     static String naytaVaihtoehdot() {
         String syote="";
         while (true) {
-            System.out.println("Mit‰ haluat tehd‰?");
-            System.out.println("play = Pelaa peli‰");
-            System.out.println("stats = N‰yt‰ voittotilastot");
-            System.out.println("admin = N‰yt‰ mit‰ kone aikoo pelata sinua vastaan");
+            System.out.println("Mit√§ haluat tehd√§?");
+            System.out.println("play = Pelaa peli√§");
+            System.out.println("stats = N√§yt√§ voittotilastot");
+            System.out.println("admin = N√§yt√§ mit√§ kone aikoo pelata sinua vastaan");
             System.out.println("test = testaa algoritmien nopeutta ja voittoprosenttia");
-            System.out.println("exit = Poistu pelist‰");
+            System.out.println("exit = Poistu pelist√§");
             syote=s.nextLine();
             if (syote.equalsIgnoreCase("play")) return syote;
             else if (syote.equalsIgnoreCase("stats")) return syote;
             else if (syote.equalsIgnoreCase("admin")) return syote;
             else if (syote.equalsIgnoreCase("test")) return syote;
             else if (syote.equalsIgnoreCase("exit")) return syote;
-            else System.out.println("Syˆt‰ validi k‰sky");
+            else System.out.println("Sy√∂t√§ validi k√§sky");
             System.out.println("");
         }
     }
     
-    String valitseAi() {
-        while (true) {
-            System.out.println("Mit‰ teko‰ly‰ vastaan haluat pelata?");
-            System.out.println("1. T‰ysin satunnainen \"teko‰ly\", "
-                    + "2. Nelj‰n naiivn AI:n yhdistelm‰");
-            String kasky=s.nextLine();
-            if (kasky.equals("1")||kasky.equals("2")) {
-                return kasky;
-            }
-            System.out.println("Syˆt‰ validi k‰sky");
-        }
-    }
-    
     static String pyydaPelaajaltaVastaus() {
-        //pyydet‰‰n pelaajalta vastaus
+        //pyydet√§√§n pelaajalta vastaus
         while (true) {
-            System.out.println("Valitse kivi(K) sakset(S) tai paperi(P) (poistu syˆtt‰m‰ll‰ e)");
+            System.out.println("Valitse kivi(K) sakset(S) tai paperi(P) (poistu sy√∂tt√§m√§ll√§ E)");
             String vastaus=s.nextLine();
             if (vastaus.equalsIgnoreCase("K")) {
                 return "kivi";
@@ -94,14 +80,14 @@ public class ui {
             else if (vastaus.equalsIgnoreCase("e")) {
                 return "exit";
             }
-            System.out.println("Syˆt‰ validi vaihtoehto");
+            System.out.println("Sy√∂t√§ validi vaihtoehto");
         }
     }
     
     static void tulostaTilastot(ArrayList <Integer> tilasto) {
         if (tilasto.isEmpty()) {
-            System.out.println("Et ole pelannut yht‰‰n peli‰!");
-        } //tarkistetaan onko pelej‰ pelattu
+            System.out.println("Et ole pelannut yht√§√§n peli√§!");
+        } //tarkistetaan onko pelej√§ pelattu
         else {
             float maara=tilasto.size();
             float pelaajaVoitot=0;
@@ -130,39 +116,39 @@ public class ui {
             float koneVoittoProsentti= koneVoitot/maara*100;
             float tasapeliProsentti=tasaPelit/maara*100;
             
-            System.out.println("Pelej‰ on pelattu "+tilasto.size()+" kerta(a)");
-            System.out.println("Pelaaja on voittanut "+pelaajaVoittoProsentti+" prosenttia peleist‰");
-            System.out.println("Kone on voittanut "+koneVoittoProsentti+" prosenttia peleist‰");
-            System.out.println("Tasapelej‰ on ollut "+tasapeliProsentti+" prosenttia peleist‰");
+            System.out.println("Pelej√§ on pelattu "+tilasto.size()+" kerta(a)");
+            System.out.println("Pelaaja on voittanut "+pelaajaVoittoProsentti+" prosenttia peleist√§");
+            System.out.println("Kone on voittanut "+koneVoittoProsentti+" prosenttia peleist√§");
+            System.out.println("Tasapelej√§ on ollut "+tasapeliProsentti+" prosenttia peleist√§");
             
             if (voittoMaara>0) { //katsotaan onko voittoja ollut, muuten koitetaan jakaa nollalla
                 float pelaajaVsKone=pelaajaVoitot/voittoMaara*100;
                 float koneVsPelaaja=koneVoitot/voittoMaara*100;
                 
                 System.out.println("Toisiinsa verrattuna pelaaja on voittanut "+pelaajaVsKone+
-                        " ja kone on voittanut "+koneVsPelaaja+" prosenttia peleist‰.");
+                        " ja kone on voittanut "+koneVsPelaaja+" prosenttia peleist√§.");
             }
         }
     }
     
     int pyydaTestiMaara() {
-        System.out.println("Kuinka monta testipeli‰ pelataan?");
+        System.out.println("Kuinka monta testipeli√§ pelataan?");
         return s.nextInt();
     }
     
     int pyydaTestiTodNak() {
-        System.out.println("Mill‰ todenn‰kˆisyydell‰ valitaan sama vastaus per‰kk‰in? (%)");
+        System.out.println("Mill√§ todenn√§k√∂isyydell√§ valitaan sama vastaus per√§kk√§in? (%)");
         return s.nextInt();
     }
     
     
     void vaihdaTila() {
         if (admin) {
-            System.out.println("Admin on pois p‰‰lt‰");
+            System.out.println("Admin on pois p√§√§lt√§");
             admin=false;
         }
         else {
-            System.out.println("Admin on p‰‰ll‰");
+            System.out.println("Admin on p√§√§ll√§");
             admin=true;
         }
         
