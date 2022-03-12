@@ -3,11 +3,18 @@ package KSP;
 
 import java.util.Random;
 
+/**
+ *
+ * @author matti
+ */
 public class Game {
     
     private AI tekoaly;
     private int pelatutPelit;
     
+    /**
+     *
+     */
     public Game() {
         tekoaly=new AI();
         pelatutPelit=0;
@@ -103,10 +110,17 @@ public class Game {
             if (pelatutPelit%5==0) {
                 parasAi=tekoaly.laskeParasAi();
             }
+            System.out.println("-----");
         }
     }
 
     //palauttaa satunnaisen vastauksen, vastausta voi rajoittaa kahteen satunnaiseen
+
+    /**
+     *
+     * @param rajoitus
+     * @return
+     */
     public static String satunnainenVastaus(String rajoitus) {
         Random r=new Random();
         int satunnainen=0;

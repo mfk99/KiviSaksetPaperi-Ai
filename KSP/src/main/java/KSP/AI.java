@@ -4,6 +4,10 @@ package KSP;
 import static KSP.Game.satunnainenVastaus;
 import java.util.Random;
 
+/**
+ *
+ * @author matti
+ */
 public class AI {
     
     private int tila;
@@ -19,6 +23,9 @@ public class AI {
     final private Random r;
     final private Statistics stats;
     
+    /**
+     *
+     */
     public AI() {
         r=new Random();
         tila=0;
@@ -43,9 +50,17 @@ public class AI {
         int paperi=0;
         for (int j=0; j<vastaukset.length; j++) {
             String vastaus=vastaukset[j];
-            if (vastaus.equals("kivi")) kivi++;
-            else if (vastaus.equals("sakset")) sakset++;
-            else paperi++;
+            switch (vastaus) {
+                case "kivi":
+                    kivi++;
+                    break;
+                case "sakset":
+                    sakset++;
+                    break;
+                default:
+                    paperi++;
+                    break;
+            }
         }
         String pelaajaVastaus=stats.getPelaajaVastaukset()[indeksi];
         if (test) { //jos ollaan testaamassa otetaan aikaa kuinka pitkään algoritmeilla menee

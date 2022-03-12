@@ -3,12 +3,27 @@ package KSP;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ *
+ * @author matti
+ */
 public class ui {
+
+    /**
+     *
+     */
     public Game peli;
+
+    /**
+     *
+     */
     public Statistics stats;
     private boolean admin=false;
     private static Scanner s;
     
+    /**
+     *
+     */
     public ui(){
         peli=new Game();
         s=new Scanner(System.in);
@@ -25,7 +40,7 @@ public class ui {
                         peli.pelaa(admin);
                         break;
                     case "stats":
-                        tulostaTilastot(stats.getTulokset());
+                        stats.tulostaTilastot();
                         break;
                     case "admin":
                         vaihdaTila();
@@ -50,7 +65,7 @@ public class ui {
             System.out.println("play = Pelaa peliä");
             System.out.println("stats = Näytä voittotilastot");
             System.out.println("admin = Näytä mitä kone aikoo pelata sinua vastaan");
-            System.out.println("test = testaa algoritmien nopeutta ja voittoprosenttia");
+            System.out.println("test = Testaa algoritmien nopeutta ja voittoprosenttia");
             System.out.println("exit = Poistu pelistä");
             syote=s.nextLine();
             if (syote.equalsIgnoreCase("play")) return syote;
@@ -59,7 +74,7 @@ public class ui {
             else if (syote.equalsIgnoreCase("test")) return syote;
             else if (syote.equalsIgnoreCase("exit")) return syote;
             else System.out.println("Syötä validi käsky");
-            System.out.println("");
+            System.out.println("-----");
         }
     }
     
@@ -84,52 +99,7 @@ public class ui {
         }
     }
     
-    static void tulostaTilastot(ArrayList <Integer> tilasto) {
-        if (tilasto.isEmpty()) {
-            System.out.println("Et ole pelannut yhtään peliä!");
-        } //tarkistetaan onko pelejä pelattu
-        else {
-            float maara=tilasto.size();
-            float pelaajaVoitot=0;
-            float koneVoitot=0;
-            float tasaPelit=0;
-            float voittoMaara=0;
-            
-            for (int i=0; i<maara; i++) { //lasketaan pelien tulokset
-                int tulos=tilasto.get(i);
-                switch (tulos){
-                    case 0:
-                        pelaajaVoitot++;
-                        voittoMaara++;
-                        break;
-                    case 1:
-                        koneVoitot++;
-                        voittoMaara++;
-                        break;
-                    case 2:
-                        tasaPelit++;
-                        break;
-                }
-            }
-            //lasketaan prosentit
-            float pelaajaVoittoProsentti= pelaajaVoitot/maara*100;
-            float koneVoittoProsentti= koneVoitot/maara*100;
-            float tasapeliProsentti=tasaPelit/maara*100;
-            
-            System.out.println("Pelejä on pelattu "+tilasto.size()+" kerta(a)");
-            System.out.println("Pelaaja on voittanut "+pelaajaVoittoProsentti+" prosenttia peleistä");
-            System.out.println("Kone on voittanut "+koneVoittoProsentti+" prosenttia peleistä");
-            System.out.println("Tasapelejä on ollut "+tasapeliProsentti+" prosenttia peleistä");
-            
-            if (voittoMaara>0) { //katsotaan onko voittoja ollut, muuten koitetaan jakaa nollalla
-                float pelaajaVsKone=pelaajaVoitot/voittoMaara*100;
-                float koneVsPelaaja=koneVoitot/voittoMaara*100;
-                
-                System.out.println("Toisiinsa verrattuna pelaaja on voittanut "+pelaajaVsKone+
-                        " ja kone on voittanut "+koneVsPelaaja+" prosenttia peleistä.");
-            }
-        }
-    }
+    
     
     int pyydaTestiMaara() {
         System.out.println("Kuinka monta testipeliä pelataan?");

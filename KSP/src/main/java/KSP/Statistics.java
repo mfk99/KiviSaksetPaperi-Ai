@@ -5,6 +5,10 @@ import static KSP.Game.satunnainenVastaus;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ *
+ * @author matti
+ */
 public class Statistics {
     
     //aiVastaukset pitävät eri tekoälyjen vastauksia
@@ -16,8 +20,16 @@ public class Statistics {
     //tulokset pitää arvoja tekoälyjen tuloksista
     final private int aiTulokset[];
     //tilastossa 0 on tasapeli, 1 pelaajan voitto ja 2 koneen voitto
+
+    /**
+     *
+     */
     public static ArrayList<Integer> tulokset =new ArrayList<Integer>();
     
+    /**
+     *
+     * @param focus
+     */
     public Statistics(int focus) {
         ai1Vastaukset=new String[2][5];
         ai2Vastaukset=new String[2][5];
@@ -75,11 +87,10 @@ public class Statistics {
         long testiAikaAlku=System.nanoTime();
         AI tekoaly =new AI();
         Random r=new Random();
-        ArrayList<Integer> testiTulokset=new ArrayList<>();
+        tulokset=new ArrayList<>();
         String pelaajaVastaus="";
-        boolean pelaajaVoitti=false;
-        boolean koneVoitti=false;
         for (int i=0; i<kerrat; i++) {
+            System.out.println("peli nro "+i);
             int parasAi=0;
             String koneVastaus="";
             int indeksi=i%5;
@@ -107,8 +118,8 @@ public class Statistics {
                 koneVastaus=satunnainenVastaus("");
             }
             
-            tekoaly.syotaVastaus(indeksi, pelaajaVastaus);
-            
+            boolean pelaajaVoitti=false;
+            boolean koneVoitti=false;
             //katsotaan pelin tulos
             if (pelaajaVastaus.equals(koneVastaus)) { //peli on tasapeli
                 System.out.println("Kummatkin valitsivat "+pelaajaVastaus);
@@ -143,19 +154,69 @@ public class Statistics {
             
             //tilastoidaan vastaus, tilastossa pelaajan voitto on 0, koneen voitto 1 ja tasapeli 2
             if (pelaajaVoitti) {
-                testiTulokset.add(0);
+                tulokset.add(0);
             }
             if (koneVoitti) {
-                testiTulokset.add(1);
+                tulokset.add(1);
             }
             if (!pelaajaVoitti && !koneVoitti) {
-                testiTulokset.add(2);
+                tulokset.add(2);
             }
+            System.out.println("tilaston koko"+tulokset.size());
             System.out.println("kone vastasi "+koneVastaus+", pelaaja vastasi "+pelaajaVastaus);
+            
         }
         
-        ui.tulostaTilastot(testiTulokset);
+        tulostaTilastot();
         long testiAikaLoppu=System.nanoTime();
         System.out.println("Testissä kului yhteensä "+(testiAikaLoppu-testiAikaAlku)+" nanosekuntia");
     }
+    
+    void tulostaTilastot() {
+        if (tulokset.isEmpty()) {
+            System.out.println("Et ole pelannut yhtään peliä!");
+        } //tarkistetaan onko pelejä pelattu
+        else {
+            float maara=tulokset.size();
+            float pelaajaVoitot=0;
+            float koneVoitot=0;
+            float tasaPelit=0;
+            float voittoMaara=0;
+            
+            for (int i=0; i<maara; i++) { //lasketaan pelien tulokset
+                int tulos=tulokset.get(i);
+                switch (tulos){
+                    case 0:
+                        pelaajaVoitot++;
+                        voittoMaara++;
+                        break;
+                    case 1:
+                        koneVoitot++;
+                        voittoMaara++;
+                        break;
+                    case 2:
+                        tasaPelit++;
+                        break;
+                }
+            }
+            //lasketaan prosentit
+            float pelaajaVoittoProsentti= pelaajaVoitot/maara*100;
+            float koneVoittoProsentti= koneVoitot/maara*100;
+            float tasapeliProsentti=tasaPelit/maara*100;
+            
+            System.out.println("Pelejä on pelattu "+tulokset.size()+" kerta(a)");
+            System.out.println("Pelaaja on voittanut "+pelaajaVoittoProsentti+" prosenttia peleistä");
+            System.out.println("Kone on voittanut "+koneVoittoProsentti+" prosenttia peleistä");
+            System.out.println("Tasapelejä on ollut "+tasapeliProsentti+" prosenttia peleistä");
+            
+            if (voittoMaara>0) { //katsotaan onko voittoja ollut, muuten koitetaan jakaa nollalla
+                float pelaajaVsKone=pelaajaVoitot/voittoMaara*100;
+                float koneVsPelaaja=koneVoitot/voittoMaara*100;
+                
+                System.out.println("Toisiinsa verrattuna pelaaja on voittanut "+pelaajaVsKone+
+                        " ja kone on voittanut "+koneVsPelaaja+" prosenttia peleistä.");
+            }
+        }
+    }
+    
 }
