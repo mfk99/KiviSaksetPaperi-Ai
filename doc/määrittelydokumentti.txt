@@ -5,7 +5,6 @@ Projektin toteutukseen tulen käyttämään Javaa. Hallitsen Javaa parhaiten, Py
 -Mitä algoritmeja ja tietorakenteita toteutat työssäsi?
 
 Käytän Markovin ketjuja työn toteuttamiseen. 
-En vielä tiedä miten tulen varastoimaan dataa, sen toteutus on tällä hetkellä pelkässä Javan ArrayListissä.
 
 -Mitä ongelmaa ratkaiset ja miksi valitsit kyseiset algoritmit/tietorakenteet?
 
@@ -20,7 +19,6 @@ Saatan luoda graafisen käyttöliittymän sovellukselle, mikäli siihen jää ai
 
 -Tavoitteena olevat aika- ja tilavaativuudet (m.m. O-analyysit)
 
-En osaa vielä sanoa mikä tekoälyn aikavaativuus on.
 Tilavaativuus on n, missä n on aikaisempien pelien tallennettu tulos.
 
 -Lähteet

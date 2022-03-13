@@ -1,0 +1,22 @@
+Ohjelman yleisrakenne
+Ohjelma koostuu luokista Main, ui, Statistics, Game ja AI.
+Luokassa ui on kaikki pelaajan kanssa kommunikoimiseen liittyvä.
+Statistics tallettaa tekoälyjen ja pelaajan vastauksia sekä pelien tuloksia.
+Luokasta löytyy myös test-metodi, jolla voi testata algoritmin suoriutumista.
+Game sisältää itse pelin logiikan ja metodin, jonka antaa satunnaisen vastauksen.
+AI sisältää tekoälyt sekä niiden eri versiot. 
+
+Aikavaativuudet
+Algoritmin aikavaativuus on n^3, missä n on viimeiset viisi pelattua peliä. 
+Joka viidennnessä pelissä lasketaan tekoälyjen pelitulokset ja valitaan käytettävä tekoäly.
+
+Tilavaativuudet
+Statistics-luokassa on kolme kappaletta [2][5] taulukkoa, yksi [5] taulukko sekä [6] taulukko.
+Luokassa on myös ArrayList-olio, jonka koko on n, missä n on pelattujen pelien määärä.
+Luokassa AI on neljä int-arvoa, [3][9] taulukko sekä [3][27] taulukko.
+
+Parannusehdotuksia
+Huomasin, että test-toiminnolla käytettäessä sadan prosentin todennäköisyyttä
+tekoäly ei aina saa laskettua parasta algoritmia oikein, joka johtaa moneen tasapeliin.
+Pelin voittoprosentti ei ole kovin hyvä. Vaikka en testannutkaan tekoälyä yhtäkään ihmistä vastaan,
+on tekoälyllä lähes aina ~33 voittoprosentti kaikista testipeleistä.

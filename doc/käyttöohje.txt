@@ -1,0 +1,8 @@
+JAR-tiedostoa en saanut tehtyä.
+
+Pelin valikosta voi tehdä viisi asiaa:
+play- pelaa peliä
+stats- näyttää pelattujen pelien tilastot
+admin- näyttää pelatessa mitä tekoälyä käytetään ja mitä se aikoo vastata
+test- simuloi pelaamista tekoälyä vastaan
+exit- poistuu pelistä

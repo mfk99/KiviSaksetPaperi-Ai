@@ -1,10 +1,10 @@
 -Yksikkötestauksen kattavuusraportti.
-
+Yksikkötestausta ei olla toteutettu.
 
 -Mitä on testattu, miten tämä tehtiin?
 
 
--Minkälaisilla syötteillä testaus tehtiin (vertailupainotteisissa töissä tärkeää)?
+-Minkälaisilla syötteillä testaus tehtiin?
 
 
 -Miten testit voidaan toistaa?
